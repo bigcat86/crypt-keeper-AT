@@ -71,4 +71,6 @@ router.get('/login', (req, res) => {
     res.render('landing');
 });
 
+//added for push
+
 module.exports = router;
