@@ -24,6 +24,12 @@ router.post('/', async (req, res) => {
             password: req.body.password
         });
 
+        await Portfolio.create({
+            portfolio_name: userData.user_name,
+            value: 1000.00,
+            user_id: userData.id
+        })
+
         req.session.save(() => {
             req.session.user_id = userData.id;
             req.session.logged_in = true;

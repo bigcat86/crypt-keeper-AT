@@ -7,7 +7,7 @@ const withAuth = require('../utils/auth');
 
 router.get('/', withAuth, async (req, res) => {
   try {
-
+    
     const portfolioData = await Portfolio.findAll({
       where: { user_id: req.session.user_id },
         include: [
