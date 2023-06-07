@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
       ...portfolio[0], 
       coinsArray, 
       coinArr, 
-      dataArr, //resGPT,
+      dataArr, 
       quantities,
       prices,
       logged_in: req.session.logged_in
