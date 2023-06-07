@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
         await Portfolio.create({
             portfolio_name: userData.user_name,
-            value: 1000.00,
+            value: 0,
             user_id: userData.id
         })
 
