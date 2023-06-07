@@ -3,8 +3,9 @@ const {User, Portfolio, Coin, PortfolioCoin} = require('../models');
 const { Configuration, OpenAIApi } = require("openai");
 const coins = require('../seeds/coin.json');
 require('dotenv').config();
+const withAuth = require('../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
 
     const portfolioData = await Portfolio.findAll({
