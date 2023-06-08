@@ -30,22 +30,27 @@ The app is very intuitive, hence we will show detailed screenshots of the major 
 
 ### Login / Landing page
 Sign in using your email and password, or sign up with username, email and password. (wallet connection coming soon! try it!)
+
 ![Screenshot 2023-06-03 at 8 32 16 AM](https://github.com/bigcat86/crypt-keeper-AT/assets/122062578/8cbb8f33-0f00-428e-bce6-5abaaabb7b9d)
 
 ### Hompeage / Dashboard
 Overview of the enire app, with all of its features. Currently the deposit, withdrawal, and performance chart are inactive. The user is given unlimited funds, and when you sell you have to sell it all. These are all future development opportunities.
+
 ![Screenshot 2023-06-07 at 6 59 28 PM](https://github.com/bigcat86/crypt-keeper-AT/assets/122062578/4a9c7b41-f7f2-4704-a9d8-d6b2bf7bb57a)
 
 ### Portfolio
 The bread and butter of our site. Charts using chart.js - buy and sell dropdown menus - total current portfolio value using the most recent market data.
+
 ![Screenshot 2023-06-07 at 7 03 13 PM](https://github.com/bigcat86/crypt-keeper-AT/assets/122062578/73f5f067-1b3d-4d57-9f71-90031244c810)
 
 ### Market Dashboard
 This is where the bulk of our data lies, with the most current price, market cap, and 24h volume. Also includes the coin logo! This is updated each time the page is loaded.
+
 ![Screenshot 2023-06-07 at 7 03 24 PM](https://github.com/bigcat86/crypt-keeper-AT/assets/122062578/1d9849e7-402a-4cdc-acd8-b7743af7da66)
 
 ### portfolioGPT!
 One of the coolest features of the app - utilizes openAI to give tailored predictions on your portfolio, and new coins to research/look into.
+
 ![Screenshot 2023-06-07 at 6 51 38 PM](https://github.com/bigcat86/crypt-keeper-AT/assets/122062578/45433038-1af1-4c1c-be1f-c4019c74de84)
 
 ## License
@@ -54,14 +59,15 @@ This project is licensed under the terms of the MIT License.
 
 ## Contributing
 
-Aaron Tanner - fullstack
-Evan Knight - backend and file structure
-Jared Barner - frontend UI/X and presentation
+- Aaron Tanner - fullstack
+- Evan Knight - backend and file structure
+- Jared Barner - frontend UI/X and presentation
 
 ## Tests
 
 - Thorough route testing using the development server
-- 
+- Detailed testing and debugging of individual features
+- Deployment run through and testing
 
 ## Questions
 
