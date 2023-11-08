@@ -7,8 +7,8 @@
         <button class="btn btn-outline-success" id="buy" type="button">Buy</button>
         <select class="form-select" id="buycoin" aria-label="Example select with button addon">
         <option selected>Pick a coin...</option>
-        {{#each coinsArray as |coin|}}
-        <option class="buy-options" id="buy-{{coin.[0]}}" value="{{coin.[0]}}">{{coin.[0]}} | ${{coin.[1]}}</option>
+        {{#each dataArr as |coin|}}
+        <option class="buy-options" id="buy-{{coin.[0]}}" value="{{coin.[0]}}">{{coin.[0]}} | ${{coin.[1].usd}}</option>
         {{/each}}
     </select>
     </div>

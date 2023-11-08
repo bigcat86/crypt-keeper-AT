@@ -19,7 +19,7 @@ Portfolio.init(
             allowNull: true
         },
         value: {
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DECIMAL(10, 2),
             allowNull: false
         },
         user_id: {

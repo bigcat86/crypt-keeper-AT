@@ -1,17 +1,5 @@
 console.log('fuck yeah sucka');
 
-// Fetch API functions
-async function handleApiCall(url) {
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-
 // Buy button -- working
 async function handleBuyClick() {
     try {
@@ -91,7 +79,7 @@ const handleBuyRefresh = async (event) => {
    try {
         console.log('clicky click')
         const response = await fetch('/api/coin/price', {
-        method: 'GET',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
     })
     

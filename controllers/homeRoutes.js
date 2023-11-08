@@ -15,7 +15,7 @@ router.get('/', withAuth, async (req, res) => {
         { model: Coin }
       ],
     });
-    console.log(portfolioData);
+    // console.log(portfolioData);
     const portfolioCoinData = await PortfolioCoin.findAll({
         where: { portfolio_id: req.session.user_id }
     });
@@ -36,6 +36,7 @@ router.get('/', withAuth, async (req, res) => {
     const dataArr = Object.entries(data)
     const coinArr = dataArr.map(coin => coin[0])
     // console.log(coinArr);
+    console.log(dataArr);
 
     const coinsArray = [];
 
@@ -45,8 +46,8 @@ router.get('/', withAuth, async (req, res) => {
 
     let prices = [];
     dataArr.forEach(coin => prices.push(coin[1].usd))
-    console.log(prices);
-    console.log(quantities);
+    // console.log(prices);
+    // console.log(quantities);
 
     res.render('dashboard', {
       ...portfolio[0], 
