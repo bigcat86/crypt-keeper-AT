@@ -6,10 +6,10 @@ const withAuth = require('../../utils/auth');
 const { where } = require('sequelize');
 const { Configuration, OpenAIApi } = require("openai");
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+// const openai = new OpenAIApi(configuration);
 
 // Get user's portfolio with associted coins
 router.get('/:id', async (req, res) => {

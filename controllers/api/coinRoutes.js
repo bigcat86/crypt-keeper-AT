@@ -15,7 +15,7 @@ router.get("/", withAuth, async (req, res) => {
 });
 
 //update all coin prices (render not working)
-router.put("/price", withAuth, async (req, res) => {
+router.put("/price", async (req, res) => {
   try {
     const coinsArray = [];
 

@@ -8,6 +8,10 @@ const withAuth = require('../utils/auth');
 router.get('/', withAuth, async (req, res) => {
   try {
 
+    const coinData = await Coin.findAll()
+    const currentCoins = coinData.map((coin) => coin.get({ plain: true }));
+    console.log(currentCoins);
+
     const portfolioData = await Portfolio.findAll({
       where: { user_id: req.session.user_id },
         include: [
@@ -35,8 +39,6 @@ router.get('/', withAuth, async (req, res) => {
     const data = await response.json();
     const dataArr = Object.entries(data)
     const coinArr = dataArr.map(coin => coin[0])
-    // console.log(coinArr);
-    console.log(dataArr);
 
     const coinsArray = [];
 
@@ -44,13 +46,19 @@ router.get('/', withAuth, async (req, res) => {
       coinsArray.push([coins[coin].coin_name, coins[coin].price]);
     }
 
+    //need to fix this so prices are in the same order as the coins
     let prices = [];
-    dataArr.forEach(coin => prices.push(coin[1].usd))
-    // console.log(prices);
-    // console.log(quantities);
+    portfolioCoin.forEach(coin => {
+      currentCoins.forEach(currentCoin => { 
+        if (coin.coin_id === currentCoin.id) {
+          prices.push(currentCoin.price)
+        }
+      })
+    });  
 
     res.render('dashboard', {
-      ...portfolio[0], 
+      ...portfolio[0],
+      currentCoins, 
       coinsArray, 
       coinArr, 
       dataArr, 
@@ -72,6 +80,5 @@ router.get('/login', (req, res) => {
     res.render('landing');
 });
 
-//added for push
 
 module.exports = router;

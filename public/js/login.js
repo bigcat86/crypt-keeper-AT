@@ -5,8 +5,6 @@ const loginFormHandler = async (event) => {
 
     const emailLogin = document.getElementById('email-login').value.trim();
     const passwordLogin = document.getElementById('password-login').value.trim();
-    
-    console.log(emailLogin + ' ' + passwordLogin)
 
     if (emailLogin && passwordLogin) {
       const response = await fetch('/api/user/login', {
@@ -17,8 +15,6 @@ const loginFormHandler = async (event) => {
         }),
         headers: { 'Content-Type': 'application/json' },
       });
-      // const data = await response.json();
-      // console.log(data);
       if (response.ok) {
         document.location.replace('/');
       } else {
@@ -52,8 +48,26 @@ const signupFormHandler = async (event) => {
     }
 };
 
+async function updateCoin() {
+  const response = await fetch('/api/coin/price', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  if (response.ok) {
+    console.log('coin updated');
+  } else {
+    alert('Failed to update coins.');
+  }
+}
+
 const submitLogin = document.getElementById('submit-login');
 const submitSignup = document.getElementById('submit-signup');
 
-submitLogin.addEventListener('click', loginFormHandler);
-submitSignup.addEventListener('click', signupFormHandler);
+submitLogin.addEventListener('click', () => {
+  updateCoin();
+  loginFormHandler();
+});
+submitSignup.addEventListener('click', () => {
+  updateCoin();
+  signupFormHandler();
+});
