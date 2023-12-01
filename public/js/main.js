@@ -1,5 +1,3 @@
-console.log('fuck yeah sucka');
-
 // Buy button -- working
 async function handleBuyClick() {
     try {
@@ -56,22 +54,7 @@ async function handleRefreshClick(event) {
     } catch (error) {
         
     }
-    
-
-    //    try {
-//         console.log('clicky click')
-//         const response = await fetch('/api/portfolio/:id', {
-//         method: 'GET',
-//         headers: { 'Content-Type': 'application/json' },
-//     })
-//     if (response.ok) {
-//         const data = await response.json();
-//         console.log(data);
-//     }
-//     } catch (error) {
-//       alert(error);
-//    }
-}
+};
 
 // refresh coin prices on dropdown click -- in progress (not rendering)
 const handleBuyRefresh = async (event) => {
@@ -105,12 +88,12 @@ const handleLogout = async (event) => {
       } else {
         alert(response.statusText);
       }
-}
+};
 
 const handleGPT = async (event) => {
     event.preventDefault();
     const gptBody = document.querySelector('#gpt-body')
-    const response = await fetch('/api/portfolio/1/gpt', {
+    const response = await fetch('/api/portfolio/3/gpt', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
     })

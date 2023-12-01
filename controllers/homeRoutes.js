@@ -7,14 +7,6 @@ const geckoKey = process.env.GECKO_API_KEY;
 
 router.get("/", withAuth, async (req, res) => {
   try {
-    console.log(`YOUR USER ID IS ${req.session.user_id}`);
-    // if (!req.session.user_id) {
-    //   req.session.user_id = 1;
-    // }
-
-    // if (!req.session.logged_in) {
-    //   req.session.logged_in = true;
-    // }
 
     const coinData = await Coin.findAll();
     const currentCoins = coinData.map((coin) => coin.get({ plain: true }));
@@ -46,10 +38,6 @@ router.get("/", withAuth, async (req, res) => {
     const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${portCoins.join('%2C')}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&x-cg-demo-api-key=${geckoKey}`);
     const data = await response.json();
     const dataArr = Object.entries(data);
-    // const text = await response.text();
-    // console.log(text);
-    console.log(dataArr);
-
  
     let prices = [];
     portfolioCoin.forEach((coin) => {
