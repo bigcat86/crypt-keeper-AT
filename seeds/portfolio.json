@@ -8,5 +8,10 @@
       "portfolio_name": "test port",
       "value": 10000.00,
       "user_id": 2
+    },
+    {
+      "portfolio_name": "Demo",
+      "value": 10000.00,
+      "user_id": 3
     }
   ]

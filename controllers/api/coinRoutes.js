@@ -3,6 +3,8 @@ const axios = require("axios");
 const withAuth = require("../../utils/auth");
 const coins = require("../../seeds/coin.json");
 const { Coin } = require("../../models");
+require("dotenv").config();
+const geckoKey = process.env.GECKO_API_KEY;
 
 //get all coin data
 router.get("/", withAuth, async (req, res) => {
@@ -17,6 +19,7 @@ router.get("/", withAuth, async (req, res) => {
 //update all coin prices (render not working)
 router.put("/price", async (req, res) => {
   try {
+    console.log("getting coins")
     const coinsArray = [];
 
     for (const coin in coins) {
@@ -26,7 +29,7 @@ router.put("/price", async (req, res) => {
     const response = await axios.get(
       `https://api.coingecko.com/api/v3/simple/price?ids=${coinsArray.join(
         "%2C"
-      )}&vs_currencies=usd`,
+      )}&vs_currencies=usd&x-cg-demo-api-key=${geckoKey}`,
       {
         params: {
           _limit: 1,

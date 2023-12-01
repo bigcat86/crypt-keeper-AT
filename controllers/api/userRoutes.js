@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const withAuth = require('../../utils/auth');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 const { User, Coin, Portfolio, PortfolioCoin } = require('../../models');
 
 // Pull user data
@@ -51,9 +52,10 @@ router.post('/login', async (req, res) => {
             res
                 .status(400)
                 .json({ message: 'Incorrect email or password, please try again' });
+            console.log('CANT FIND USER DATA');
             return;
         }
-
+       
         // Use bcrypt to compare the provided password with the stored hashed password
         const validPassword = await bcrypt.compare(
             req.body.password,
@@ -64,18 +66,25 @@ router.post('/login', async (req, res) => {
             res
                 .status(400)
                 .json({ message: 'Incorrect email or password, please try again' });
+            console.log('PASSWORDS DONT MATCH');
             return;
-        } else {
-            req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true;
-
-            res.status(200).json({ user: userData.user_name, message: 'You are now logged in!' });
-            })
-        }
-
-    } catch (err) {
-        res.status(500).json(err);
+        } 
+        console.log('saving session...')
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+        req.session.save(err => {
+            if (err) {
+                console.error(`Session save error: ${err}`);
+                res.status(500).json({ error: 'Error saving session' });
+            } else {
+                res.status(200).json({ success: true, redirectTo: '/' });
+            }
+        });
+        
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error);
     }
 });
 
@@ -89,5 +98,6 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 });
+
 
 module.exports = router;

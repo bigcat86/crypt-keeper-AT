@@ -1,84 +1,91 @@
-const router = require('express').Router();
-const {User, Portfolio, Coin, PortfolioCoin} = require('../models');
+const router = require("express").Router();
+const { User, Portfolio, Coin, PortfolioCoin } = require("../models");
 const { Configuration, OpenAIApi } = require("openai");
-const coins = require('../seeds/coin.json');
-require('dotenv').config();
-const withAuth = require('../utils/auth');
+require("dotenv").config();
+const withAuth = require("../utils/auth");
+const geckoKey = process.env.GECKO_API_KEY;
 
-router.get('/', withAuth, async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
+    console.log(`YOUR USER ID IS ${req.session.user_id}`);
+    // if (!req.session.user_id) {
+    //   req.session.user_id = 1;
+    // }
 
-    const coinData = await Coin.findAll()
+    // if (!req.session.logged_in) {
+    //   req.session.logged_in = true;
+    // }
+
+    const coinData = await Coin.findAll();
     const currentCoins = coinData.map((coin) => coin.get({ plain: true }));
-    console.log(currentCoins);
 
     const portfolioData = await Portfolio.findAll({
       where: { user_id: req.session.user_id },
-        include: [
-        { model: User, attributes: ['user_name'] },
-        { model: Coin }
-      ],
+      include: [{ model: User, attributes: ["user_name"] }, { model: Coin }],
     });
-    // console.log(portfolioData);
+
+    const portfolio = portfolioData.map((portfolio) =>
+      portfolio.get({ plain: true })
+    );
+
     const portfolioCoinData = await PortfolioCoin.findAll({
-        where: { portfolio_id: req.session.user_id }
+      where: { portfolio_id: req.session.user_id },
     });
-    const portfolioCoin = portfolioCoinData.map((portcoin) => portcoin.get({ plain: true }))
-    
+    const portfolioCoin = portfolioCoinData.map((portcoin) =>
+      portcoin.get({ plain: true })
+    );
+
     let quantities = [];
-    portfolioCoin.forEach(coin => quantities.push(coin.quantity));
-    // console.log(quantities);
+    portfolioCoin.forEach((coin) => quantities.push(coin.quantity));
 
-    const portfolio = portfolioData.map((portfolio) => portfolio.get({ plain: true }));
     let portCoins = [];
-    portfolio[0].coins.forEach(coin => portCoins.push(coin.coin_name));
+    portfolio[0].coins.forEach((coin) => portCoins.push(coin.coin_name));
 
-    // console.log(portfolio[0].portfolio_coin[0]);
 
-    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${portCoins.join('%2C')}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true`)
+    const { default: fetch } = await import('node-fetch');
+    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${portCoins.join('%2C')}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&x-cg-demo-api-key=${geckoKey}`);
     const data = await response.json();
-    const dataArr = Object.entries(data)
-    const coinArr = dataArr.map(coin => coin[0])
+    const dataArr = Object.entries(data);
+    // const text = await response.text();
+    // console.log(text);
+    console.log(dataArr);
 
-    const coinsArray = [];
-
-    for (const coin in coins) {
-      coinsArray.push([coins[coin].coin_name, coins[coin].price]);
-    }
-
-    //need to fix this so prices are in the same order as the coins
+ 
     let prices = [];
-    portfolioCoin.forEach(coin => {
-      currentCoins.forEach(currentCoin => { 
+    portfolioCoin.forEach((coin) => {
+      currentCoins.forEach((currentCoin) => {
         if (coin.coin_id === currentCoin.id) {
-          prices.push(currentCoin.price)
+          prices.push(currentCoin.price);
         }
-      })
-    });  
+      });
+    });
 
-    res.render('dashboard', {
+    res.render("dashboard", {
       ...portfolio[0],
-      currentCoins, 
-      coinsArray, 
-      coinArr, 
-      dataArr, 
+      currentCoins,
+      portCoins,
+      dataArr,
       quantities,
       prices,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
+    console.log(`ERROR ERRROR ERROR, THIS IS AN ERROR ${err}`);
     res.status(500).json(err);
   }
 });
 
 // GET route for login page
-router.get('/login', (req, res) => {
+router.get("/login", (req, res) => {
+  try {
     if (req.session.logged_in) {
-        res.redirect('/');
-        return;
+      res.redirect("/");
     }
-    res.render('landing');
+    res.render("landing");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
 });
-
 
 module.exports = router;

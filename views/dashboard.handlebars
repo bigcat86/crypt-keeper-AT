@@ -91,7 +91,7 @@
     let portfolioChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-        labels: [{{#each coinArr}} `{{this}}`, {{/each}}],
+        labels: [{{#each portCoins}} `{{this}}`, {{/each}}],
             datasets: [{
                 label: 'Value $:',
                 data: [{{mult-array prices quantities}}],
@@ -99,7 +99,7 @@
             }]
         }
     });
-{{!-- {{#each dataArr}} {{this.[1].usd}}, {{/each}} --}}
+
 </script>
 <script src="/js/main.js"></script> 
 </body>

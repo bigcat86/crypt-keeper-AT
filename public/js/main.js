@@ -139,7 +139,7 @@ const gptButton = document.getElementById('gpt');
 buyButton.addEventListener('click', handleBuyClick);
 sellButton.addEventListener('click', handleSellClick);
 refreshButton.addEventListener('click', handleRefreshClick);
-buyRefreshButton.addEventListener('click', handleBuyRefresh);
+// buyRefreshButton.addEventListener('click', handleBuyRefresh);
 logoutButton.addEventListener('click', handleLogout);
 gptButton.addEventListener('click', handleGPT);
 
