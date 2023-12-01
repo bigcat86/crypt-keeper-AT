@@ -4,13 +4,11 @@ require('dotenv').config();
 const { Portfolio, User, Coin, PortfolioCoin } = require('../../models');
 const withAuth = require('../../utils/auth');
 const { where } = require('sequelize');
-const { Configuration, OpenAIApi } = require("openai");
+const { OpenAI } = require("openai");
 
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-// const openai = new OpenAIApi(configuration);
-
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY // defaults to process.env["OPENAI_API_KEY"]
+});
 // Get user's portfolio with associted coins
 router.get('/:id', async (req, res) => {
   try {
@@ -109,20 +107,26 @@ router.get('/:id/gpt', withAuth, async (req, res) => {
     portfolio.forEach(coin => coins.push(coin.coin_name))
     // console.log(coins);
 
-    const gpt = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `My cryptocurrency portfolio holds ${coins}. As of the year 2023, give me predictions for the coins in my portfolio and recent news for each coin. Finally, suggest one cryptocurrency that is worth researching more about. Please format your response in neat html, using <h3> for the headers of each section, breaks after each section, and with no html head.`,
-        temperature: 1.2,
-        max_tokens: 2048,
-        // top_p: 1.0,
-        n: 1,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.0,
-        stop: ["\"\"\""],
+    const chatCompletion = await openai.chat.completions.create({
+      messages: [{ role: 'user', content: `My cryptocurrency portfolio holds ${coins}. As of the year 2023, give me predictions for the coins in my portfolio and recent news for each coin. Finally, suggest one cryptocurrency that is worth researching more about. Please format your response in neat html, using <h3> for the headers of each section, breaks after each section, and with no html head.` }],
+      model: 'gpt-3.5-turbo',
     });
-    const resGPT = gpt.data.choices[0].text;
-    console.log(resGPT);
-    res.status(200).json(resGPT);
+
+    console.log(chatCompletion.data);
+    // const gpt = await openai.createCompletion({
+    //     model: "text-davinci-003",
+    //     prompt: `My cryptocurrency portfolio holds ${coins}. As of the year 2023, give me predictions for the coins in my portfolio and recent news for each coin. Finally, suggest one cryptocurrency that is worth researching more about. Please format your response in neat html, using <h3> for the headers of each section, breaks after each section, and with no html head.`,
+    //     temperature: 1.2,
+    //     max_tokens: 2048,
+    //     // top_p: 1.0,
+    //     n: 1,
+    //     frequency_penalty: 0.0,
+    //     presence_penalty: 0.0,
+    //     stop: ["\"\"\""],
+    // });
+    // const resGPT = gpt.data.choices[0].text;
+    // console.log(resGPT);
+    // res.status(200).json(resGPT);
   } catch (error) {
     console.log(error);   
   }

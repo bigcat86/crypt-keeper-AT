@@ -20,7 +20,7 @@
     "express-session": "^1.17.3",
     "mysql2": "^3.3.2",
     "node-fetch": "^3.3.2",
-    "openai": "^4.19.0",
+    "openai": "^4.20.1",
     "sequelize": "^6.31.1"
   },
   "devDependencies": {
