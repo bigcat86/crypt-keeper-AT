@@ -35,7 +35,7 @@ router.post("/deposit", withAuth, async (req, res) => {
 
     const deposit = req.body.deposit;
     const newBalance = Number(portfolio.value) + deposit;
-    
+
     console.log(newBalance);
 
     const newPortfolio = await Portfolio.update(
@@ -146,8 +146,13 @@ router.get("/:id/gpt", withAuth, async (req, res) => {
     const portfolio = portfolioData[0].coins.map((coin) =>
       coin.get({ plain: true })
     );
+    
     let coins = [];
-    portfolio.forEach((coin) => coins.push(coin.coin_name));
+    portfolio.forEach((coin) => {
+      if (coin.coin_name !== "usd") {
+        coins.push(coin.coin_name);
+      }
+    });
     console.log(coins);
 
     const chatCompletion = await openai.chat.completions.create({
@@ -160,8 +165,8 @@ router.get("/:id/gpt", withAuth, async (req, res) => {
       model: "gpt-3.5-turbo",
     });
 
-    console.log(chatCompletion.data);
-    res.status(200).json(chatCompletion.data);
+    const gptScript = chatCompletion.choices[0].message.content
+    res.status(200).json(gptScript);
   } catch (error) {
     console.log(error);
   }

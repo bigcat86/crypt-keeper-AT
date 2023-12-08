@@ -100,9 +100,11 @@ const handleGPT = async (event) => {
     if (response.ok) {
         const gpt = await response.json();
         const spinner = document.querySelector('#spinner');
+        const gimme = document.querySelector('#gimme');
         const gptEl = document.createElement('div');
         if(gptEl) {
             spinner.style.display = 'none';
+            gimme.style.display = 'none';
         }
         gptEl.innerHTML = gpt;
         gptBody.appendChild(gptEl);
