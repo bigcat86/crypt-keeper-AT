@@ -111,6 +111,26 @@ const handleGPT = async (event) => {
       }
 }
 
+const handleDeposit = async (event) => {
+    console.log('deposit clicked')  
+    event.preventDefault();
+    const deposit = document.querySelector('#depositAmount').value.trim();
+    const depositNUmber = Number(deposit);
+
+    const response = await fetch('/api/portfolio/deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deposit: depositNUmber })
+    })
+    if (response.ok) {
+        const data = await response.json();
+        window.location.reload();
+        console.log(data);
+      } else {
+        alert(response.statusText);
+      }
+}
+
 // Define buttons
 const buyButton = document.querySelector('#buy');
 const sellButton = document.querySelector('#sell');
@@ -118,6 +138,7 @@ const refreshButton = document.querySelector('#refresh');
 const buyRefreshButton = document.querySelector('#buyRefresh');
 const logoutButton = document.getElementById('logout');
 const gptButton = document.getElementById('gpt');
+const depositButton = document.querySelector('#deposit');
 // Add event listeners to the buttons
 buyButton.addEventListener('click', handleBuyClick);
 sellButton.addEventListener('click', handleSellClick);
@@ -125,4 +146,4 @@ refreshButton.addEventListener('click', handleRefreshClick);
 // buyRefreshButton.addEventListener('click', handleBuyRefresh);
 logoutButton.addEventListener('click', handleLogout);
 gptButton.addEventListener('click', handleGPT);
-
+depositButton.addEventListener('click', handleDeposit);

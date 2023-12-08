@@ -7,10 +7,10 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <button type="button" class="btn btn-outline-warning mx-2">Deposit</button>
+            <button type="button" class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target="#depositModal" id="depositBtn">Deposit</button>
           </li>
           <li>
-            <button type="button" class="btn btn-outline-warning mx-2">Withdrawal</button>
+            <button type="button" class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target="#withdrawalModal" id="withdrawalBtn">Withdrawal</button>
           </li>
           <li>
             <button type="button" class="btn btn-outline-warning mx-2" id="logout">Logout</button>
@@ -19,6 +19,40 @@
       </div>
     </div>
   </nav>
+
+  <div class="modal fade" id="withdrawalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <button type="button" class="btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-warning">
+        <div class="cointainer d-flex align-items-center justify-content-center text-dark" style="height: 20vh">
+          <h3>One day, this will be actual money :)</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <button type="button" class="btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-warning">
+        <div class="cointainer d-flex flex-column align-items-center justify-content-center text-dark" style="height: 20vh">
+          <h3>How much fake money would you like to deposit?</h3>
+          <div>
+            <input type="number" id="depositAmount" placeholder="Enter amount here" style="width: 200px; margin-left: 20px;">
+            <button type="button" class="btn btn-outline-dark" id="deposit">Deposit</button>
+          </div> 
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <main>
 
@@ -91,13 +125,27 @@
     let portfolioChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-        labels: [{{#each portCoins}} `{{this}}`, {{/each}}],
+        labels: ["usd", {{#each portCoins}} `{{this}}`, {{/each}}],
             datasets: [{
                 label: 'Value $:',
-                data: [{{mult-array prices quantities}}],
-                backgroundColor: [ '#fcf1d5', '#f5d279', '#efb41d', '#ce970e', '#a0760b', '#725407', '#443204', '#161001'],
+                data: [{{usd.quantity}}, {{mult-array prices quantities}}],
+                backgroundColor: [ '#198754','#fcf1d5', '#f5d279', '#efb41d', '#ce970e', '#a0760b', '#725407', '#443204', '#161001'],
             }]
         }
+    });
+
+    const depositBtn = document.getElementById('depositBtn')
+    const depositModal = document.getElementById('depositModal')
+
+    depositBtn.addEventListener('click', () => {
+      depositModal.focus()
+    });
+
+    const withdrawalBtn = document.getElementById('withdrawalBtn')
+    const withdrawalModal = document.getElementById('withdrawalModal')
+
+    withdrawalBtn.addEventListener('click', () => {
+      withdrawalModal.focus()
     });
 
 </script>

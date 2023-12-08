@@ -31,14 +31,17 @@ router.get("/", withAuth, async (req, res) => {
     portfolioCoin.forEach((coin) => quantities.push(coin.quantity));
 
     let portCoins = [];
-    portfolio[0].coins.forEach((coin) => portCoins.push(coin.coin_name));
-
+    portfolio[0].coins.forEach((coin) => {
+      if (coin.coin_name !== "usd") {
+        portCoins.push(coin.coin_name);
+      }
+    });
 
     const { default: fetch } = await import('node-fetch');
     const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${portCoins.join('%2C')}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&x-cg-demo-api-key=${geckoKey}`);
     const data = await response.json();
     const dataArr = Object.entries(data);
- 
+
     let prices = [];
     portfolioCoin.forEach((coin) => {
       currentCoins.forEach((currentCoin) => {
@@ -48,8 +51,16 @@ router.get("/", withAuth, async (req, res) => {
       });
     });
 
+    const usd = {
+      price: 1,
+      quantity: portfolio[0].value,
+    }
+
+    console.log(usd.quantity);
+
     res.render("dashboard", {
       ...portfolio[0],
+      usd,
       currentCoins,
       portCoins,
       dataArr,

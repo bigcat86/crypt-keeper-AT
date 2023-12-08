@@ -24,6 +24,39 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/deposit", withAuth, async (req, res) => {
+  try {
+    const portfolioData = await Portfolio.findAll({
+      where: { user_id: req.session.user_id },
+      include: [{ model: User }, { model: Coin }],
+    });
+    const portfolio = portfolioData[0].get({ plain: true });
+    // console.log(req.body.deposit);
+
+    const deposit = req.body.deposit;
+    const newBalance = Number(portfolio.value) + deposit;
+    
+    console.log(newBalance);
+
+    const newPortfolio = await Portfolio.update(
+      { value: newBalance },
+      { where: { user_id: req.session.user_id } }
+    );
+    // console.log(newPortfolio);
+
+    // const portfolioCoin = await PortfolioCoin.create(
+    //   { quantity: quantity + deposit, 
+    //     coin_id: 1,
+    //     portfolio_id: portfolio.id
+    //   }
+    // );
+    // console.log(portfolioCoin);
+    res.status(200).json({ message: `Deposit successful, new balance is ${newBalance}` });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Add a coin to user's portfolio
 router.post("/coin", withAuth, async (req, res) => {
   try {
@@ -115,7 +148,7 @@ router.get("/:id/gpt", withAuth, async (req, res) => {
     );
     let coins = [];
     portfolio.forEach((coin) => coins.push(coin.coin_name));
-    // console.log(coins);
+    console.log(coins);
 
     const chatCompletion = await openai.chat.completions.create({
       messages: [

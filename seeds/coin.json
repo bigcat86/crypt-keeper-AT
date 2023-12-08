@@ -1,42 +1,46 @@
 [
-    {
-      "coin_name": "bitcoin" ,
-      "price": 25753.00
-    },
-    {
-      "coin_name": "ethereum" ,
-      "price": 1812.86
-    },
-    {
-      "coin_name": "solana" ,
-      "price": 19.95
-    },
-    {
-      "coin_name": "ripple" ,
-      "price": 0.5089
-    },
-    {
-      "coin_name": "cardano" ,
-      "price": 0.3510
-    },
-    {
-      "coin_name": "dogecoin" ,
-      "price": 0.0668
-    },
-    {
-      "coin_name": "polygon" ,
-      "price": 1.00
-    },
-    {
-      "coin_name": "tron" ,
-      "price": 0.0790
-    },
-    {
-      "coin_name": "polkadot" ,
-      "price": 5.07
-    },
-    {
-      "coin_name": "avalanche" ,
-      "price": 14.00
-    }
-  ]
+  {
+    "coin_name": "usd",
+    "price": 1.00
+  },
+  {
+    "coin_name": "bitcoin",
+    "price": 25753.00
+  },
+  {
+    "coin_name": "ethereum",
+    "price": 1812.86
+  },
+  {
+    "coin_name": "solana",
+    "price": 19.95
+  },
+  {
+    "coin_name": "ripple",
+    "price": 0.5089
+  },
+  {
+    "coin_name": "cardano",
+    "price": 0.3510
+  },
+  {
+    "coin_name": "dogecoin",
+    "price": 0.0668
+  },
+  {
+    "coin_name": "polygon",
+    "price": 1.00
+  },
+  {
+    "coin_name": "tron",
+    "price": 0.0790
+  },
+  {
+    "coin_name": "polkadot",
+    "price": 5.07
+  },
+  {
+    "coin_name": "avalanche",
+    "price": 14.00
+  }
+]
